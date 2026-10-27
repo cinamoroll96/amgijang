@@ -1,6 +1,6 @@
 // 기계 임용 문제집 – 오프라인용 서비스 워커
 // 파일이 바뀌면 VERSION이 바뀌고, 다음 실행 때 새 판으로 교체된다.
-const VERSION = "4a7f23d003";
+const VERSION = "c3d53f6fa6";
 const CACHE = "munjejip-" + VERSION;
 const FILES = ["./", "index.html", "manifest.json", "icon-180.png", "icon-192.png", "icon-512.png"];
 
