@@ -119,10 +119,60 @@ details ul{margin:6px 0 0;padding-left:1.2em;display:flex;flex-direction:column;
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 
-<style>body{margin:0;padding-top:max(18px,env(safe-area-inset-top));padding-bottom:max(70px,env(safe-area-inset-bottom))}[hidden]{display:none!important}</style><style>body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}#top{right:max(16px,env(safe-area-inset-right))}html{-webkit-tap-highlight-color:transparent}body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:50;pointer-events:none}</style><style>body::before{background:#1f5fd0}@media (prefers-color-scheme:dark){body::before{background:var(--bg)}}</style><style>.pdfbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:9px;min-width:0}.pdfhd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}.pdfhd b{font-size:.95rem}.pdfhd span{font-size:.75rem;color:var(--muted)}.pdfrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pdfc{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:54px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--blank);color:var(--ink);text-decoration:none;font:inherit;text-align:left;cursor:pointer;min-width:0;-webkit-tap-highlight-color:transparent}.pdfc b{font-size:.93rem;color:var(--accent);line-height:1.25}.pdfc span{font-size:.72rem;color:var(--muted);line-height:1.3}.pdfc:active,.pdfsub a:active{background:var(--accent-soft)}.pdfc i{font-style:normal;display:inline-block;transition:transform .15s}#pdfg[aria-expanded="true"] i{transform:rotate(180deg)}.pdfsub{display:flex;flex-wrap:wrap;gap:6px}.pdfsub[hidden]{display:none}.pdfsub a{display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--blank);color:var(--ink);text-decoration:none;font-size:.84rem}.pdfsub a small{font-size:.7rem;color:var(--muted)}.pdfnote{font-size:.72rem;color:var(--muted)}</style></head><body><div class="wrap">
+<style>body{margin:0;padding-top:max(18px,env(safe-area-inset-top));padding-bottom:max(70px,env(safe-area-inset-bottom))}[hidden]{display:none!important}</style><style>body{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}#top{right:max(16px,env(safe-area-inset-right))}html{-webkit-tap-highlight-color:transparent}body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:50;pointer-events:none}</style><style>body::before{background:#1f5fd0}@media (prefers-color-scheme:dark){body::before{background:var(--bg)}}</style><style>/* 문제집 홈 화면 앱 – PDF 칸 + 앱 안 PDF 보기(pdf.js) */
+.pdfbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.pdfhd{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+.pdfhd b{font-size:.95rem}
+.pdfhd span{font-size:.75rem;color:var(--muted)}
+.pdfrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pdfc{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:54px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;
+  background:var(--blank);color:var(--ink);text-decoration:none;font:inherit;text-align:left;cursor:pointer;min-width:0;-webkit-tap-highlight-color:transparent}
+.pdfc b{font-size:.93rem;color:var(--accent);line-height:1.25}
+.pdfc span{font-size:.72rem;color:var(--muted);line-height:1.3}
+.pdfc:active,.pdfsub a:active{background:var(--accent-soft)}
+.pdfc i{font-style:normal;display:inline-block;transition:transform .15s}
+#pdfg[aria-expanded="true"] i{transform:rotate(180deg)}
+.pdfc.saved b::after,.pdfsub a.saved::after{content:"✓";color:var(--ok);font-weight:800;margin-left:4px}
+.pdfsub{display:flex;flex-wrap:wrap;gap:6px}
+.pdfsub[hidden]{display:none}
+.pdfsub a{display:inline-flex;align-items:center;gap:5px;min-height:36px;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--blank);color:var(--ink);text-decoration:none;font-size:.84rem;-webkit-tap-highlight-color:transparent}
+.pdfsub a small{font-size:.7rem;color:var(--muted)}
+.pdfsave{display:flex;flex-direction:column;gap:5px}
+.pdfall{border:0;border-radius:10px;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;font-size:.9rem;min-height:44px;padding:8px 12px;cursor:pointer}
+.pdfall[hidden]{display:none}
+.pdfall:disabled{opacity:.75;cursor:default}
+.pdfallmsg{font-size:.76rem;color:var(--muted)}
+.pdfallmsg b{color:var(--ok)}
+.pdfnote{font-size:.72rem;color:var(--muted)}
+
+.pv{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;background:#3b4148;color:var(--ink)}
+.pv[hidden]{display:none}
+.pvbar{display:flex;align-items:center;gap:6px;flex:none;background:#1f5fd0;color:#fff;
+  padding:calc(env(safe-area-inset-top,0px) + 6px) calc(env(safe-area-inset-right,0px) + 8px) 6px calc(env(safe-area-inset-left,0px) + 8px)}
+.pvb{flex:none;min-width:42px;min-height:40px;padding:0 10px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.14);color:#fff;font:inherit;font-size:.9rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pvb.z{font-size:1.2rem;padding:0;line-height:1}
+.pvb:active{background:rgba(255,255,255,.3)}
+.pvti{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.pvt{font-weight:700;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pvpg{font-size:.74rem;opacity:.85;font-variant-numeric:tabular-nums}
+.pvsc{flex:1;position:relative;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;overscroll-behavior:contain}
+.pvin{box-sizing:border-box;margin:0 auto;transform-origin:0 0}
+.pvp{background:#fff;position:relative;box-shadow:0 1px 4px rgba(0,0,0,.4);margin-left:auto;margin-right:auto}
+.pvp canvas{display:block;width:100%;height:100%}
+.pvmsg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(82%,340px);box-sizing:border-box;background:var(--surface);color:var(--ink);padding:16px 18px;border-radius:12px;
+  text-align:center;font-size:.9rem;line-height:1.5;box-shadow:0 6px 22px rgba(0,0,0,.35)}
+.pvmsg[hidden]{display:none}
+.pvmsg a{color:var(--accent);font-weight:700}
+.pvspin{width:28px;height:28px;margin:0 auto 10px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:pvspin .8s linear infinite}
+@keyframes pvspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pvspin{animation:none}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pv{background:#0b1118}:root:not([data-theme="light"]) .pvbar{background:#17222e}}
+:root[data-theme="dark"] .pv{background:#0b1118}
+:root[data-theme="dark"] .pvbar{background:#17222e}
+</style></head><body><div class="wrap">
   <div><h1>기계 임용 문제집</h1>
   <p class="sub"><b>실제 기출</b>은 2022~2026학년도 임용 1차 전공 A·B 115문항(원본 그림 + 풀이), <b>2027 모의고사</b>는 실제 시험 구조(전공 A 12 · B 11문항)로 새로 낸 문제, <b>2027 예상문제</b>는 최근 기출 흐름을 분석해 낸 실전형 문제(서술형 4점 · 기입형 2점), <b>공식 연계 문제</b>는 공식 카드로 만든 문제이고, <b>기본 문제집</b>은 암기장(공식집 3권 + 공업교육학 서브노트)으로 만든 문제입니다. 문제를 풀어 본 뒤 <b>힌트 · 풀이 과정 · 정답</b> 칸을 각각 눌러 확인하고, 맞음/틀림을 표시하세요.</p></div>
-  <div class="pdfbox" role="group" aria-label="PDF 자료"><div class="pdfhd"><b>PDF로 보기</b><span>누르면 바로 열립니다 · 인터넷 필요</span></div><div class="pdfrow"><a class="pdfc" href="../pdf/2022-2026_%EA%B8%B0%EA%B3%84%EC%9E%84%EC%9A%A9_%EC%8B%A4%EC%A0%9C%EA%B8%B0%EC%B6%9C_%EC%83%81%EC%84%B8%ED%92%80%EC%9D%B4.pdf?v=6a6fec65" target="_blank" rel="noopener"><b>실제 기출 풀이</b><span>115문항 · 176쪽 · 16MB</span></a><a class="pdfc" href="../pdf/2027_%EA%B8%B0%EA%B3%84%EC%9E%84%EC%9A%A9_%EC%8B%A4%EC%A0%84%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC_%EC%83%81%EC%84%B8%ED%92%80%EC%9D%B4.pdf?v=15a51374" target="_blank" rel="noopener"><b>2027 모의고사</b><span>23문항 · 30쪽 · 1.8MB</span></a><a class="pdfc" href="../pdf/2027_%EA%B8%B0%EA%B3%84%EC%9E%84%EC%9A%A9_%EC%98%88%EC%83%81%EB%AC%B8%EC%A0%9C_%EC%83%81%EC%84%B8%ED%92%80%EC%9D%B4.pdf?v=c972e426" target="_blank" rel="noopener"><b>2027 예상문제</b><span>75문항 · 96쪽 · 3.5MB</span></a><button type="button" class="pdfc" id="pdfg" aria-expanded="false" aria-controls="pdfsub"><b>공식 정리 <i aria-hidden="true">▾</i></b><span>전체 · 과목별 12개</span></button></div><div class="pdfsub" id="pdfsub" hidden><a href="../pdf/00_%EC%A0%84%EC%B2%B4_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=03e0cd4f" target="_blank" rel="noopener">전체<small>226쪽</small></a><a href="../pdf/01_%EC%9E%AC%EB%A3%8C%EC%97%AD%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=012dde0c" target="_blank" rel="noopener">재료역학<small>23쪽</small></a><a href="../pdf/02_%EC%9C%A0%EC%B2%B4%EC%97%AD%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=885ebd59" target="_blank" rel="noopener">유체역학<small>24쪽</small></a><a href="../pdf/03_%EC%97%B4%EC%97%AD%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=10336aed" target="_blank" rel="noopener">열역학<small>23쪽</small></a><a href="../pdf/04_%EC%9A%94%EC%86%8C%EC%84%A4%EA%B3%84_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=4ba59ae9" target="_blank" rel="noopener">요소설계<small>22쪽</small></a><a href="../pdf/05_%EA%B8%B0%EA%B3%84%EA%B3%B5%EC%9E%91%EB%B2%95_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=45564b7a" target="_blank" rel="noopener">기계공작법<small>22쪽</small></a><a href="../pdf/06_%EA%B8%B0%EA%B3%84%EC%9E%AC%EB%A3%8C_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=6f795fd8" target="_blank" rel="noopener">기계재료<small>16쪽</small></a><a href="../pdf/07_%EA%B8%B0%EA%B3%84%EC%A0%9C%EB%8F%84_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=9770afea" target="_blank" rel="noopener">기계제도<small>13쪽</small></a><a href="../pdf/08_%EC%9E%90%EB%8F%99%EC%B0%A8%EA%B3%B5%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=20397ad1" target="_blank" rel="noopener">자동차공학<small>20쪽</small></a><a href="../pdf/09_%EC%A0%84%EA%B8%B0_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=24dcfc26" target="_blank" rel="noopener">전기<small>18쪽</small></a><a href="../pdf/10_%EC%9E%90%EB%8F%99%EC%A0%9C%EC%96%B4_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=e1c97d62" target="_blank" rel="noopener">자동제어<small>15쪽</small></a><a href="../pdf/11_%EC%9C%A0%EC%95%95%EA%B8%B0%EA%B8%B0_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=3e0f28f3" target="_blank" rel="noopener">유압기기<small>17쪽</small></a><a href="../pdf/12_%EA%B3%B5%EC%97%85%EA%B5%90%EC%9C%A1%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=ec50e2db" target="_blank" rel="noopener">공업교육학<small>12쪽</small></a></div><div class="pdfnote">인터넷 없이 보려면 PDF를 연 뒤 공유 → ‘도서’에 저장해 두세요.</div></div>
+  <div class="pdfbox" role="group" aria-label="PDF 자료"><div class="pdfhd"><b>PDF로 보기</b><span>앱 안에서 바로 열립니다</span></div><div class="pdfrow"><a class="pdfc" href="../pdf/2022-2026_%EA%B8%B0%EA%B3%84%EC%9E%84%EC%9A%A9_%EC%8B%A4%EC%A0%9C%EA%B8%B0%EC%B6%9C_%EC%83%81%EC%84%B8%ED%92%80%EC%9D%B4.pdf?v=6a6fec65" target="_blank" rel="noopener" data-pdf="1" data-title="실제 기출 2022~2026 상세 풀이" data-size="16409861"><b>실제 기출 풀이</b><span>115문항 · 176쪽 · 16MB</span></a><a class="pdfc" href="../pdf/2027_%EA%B8%B0%EA%B3%84%EC%9E%84%EC%9A%A9_%EC%8B%A4%EC%A0%84%EB%AA%A8%EC%9D%98%EA%B3%A0%EC%82%AC_%EC%83%81%EC%84%B8%ED%92%80%EC%9D%B4.pdf?v=15a51374" target="_blank" rel="noopener" data-pdf="1" data-title="2027 실전 모의고사 상세 풀이" data-size="1801847"><b>2027 모의고사</b><span>23문항 · 30쪽 · 1.8MB</span></a><a class="pdfc" href="../pdf/2027_%EA%B8%B0%EA%B3%84%EC%9E%84%EC%9A%A9_%EC%98%88%EC%83%81%EB%AC%B8%EC%A0%9C_%EC%83%81%EC%84%B8%ED%92%80%EC%9D%B4.pdf?v=c972e426" target="_blank" rel="noopener" data-pdf="1" data-title="2027 예상문제 상세 풀이" data-size="3491251"><b>2027 예상문제</b><span>75문항 · 96쪽 · 3.5MB</span></a><button type="button" class="pdfc" id="pdfg" aria-expanded="false" aria-controls="pdfsub"><b>공식 정리 <i aria-hidden="true">▾</i></b><span>전체 · 과목별 12개</span></button></div><div class="pdfsub" id="pdfsub" hidden><a href="../pdf/00_%EC%A0%84%EC%B2%B4_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=03e0cd4f" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 전체" data-size="6288995">전체<small>226쪽</small></a><a href="../pdf/01_%EC%9E%AC%EB%A3%8C%EC%97%AD%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=012dde0c" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 재료역학" data-size="1386168">재료역학<small>23쪽</small></a><a href="../pdf/02_%EC%9C%A0%EC%B2%B4%EC%97%AD%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=885ebd59" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 유체역학" data-size="1400829">유체역학<small>24쪽</small></a><a href="../pdf/03_%EC%97%B4%EC%97%AD%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=10336aed" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 열역학" data-size="1303089">열역학<small>23쪽</small></a><a href="../pdf/04_%EC%9A%94%EC%86%8C%EC%84%A4%EA%B3%84_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=4ba59ae9" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 요소설계" data-size="1296778">요소설계<small>22쪽</small></a><a href="../pdf/05_%EA%B8%B0%EA%B3%84%EA%B3%B5%EC%9E%91%EB%B2%95_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=45564b7a" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 기계공작법" data-size="1241233">기계공작법<small>22쪽</small></a><a href="../pdf/06_%EA%B8%B0%EA%B3%84%EC%9E%AC%EB%A3%8C_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=6f795fd8" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 기계재료" data-size="1074589">기계재료<small>16쪽</small></a><a href="../pdf/07_%EA%B8%B0%EA%B3%84%EC%A0%9C%EB%8F%84_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=9770afea" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 기계제도" data-size="980537">기계제도<small>13쪽</small></a><a href="../pdf/08_%EC%9E%90%EB%8F%99%EC%B0%A8%EA%B3%B5%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=20397ad1" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 자동차공학" data-size="1145440">자동차공학<small>20쪽</small></a><a href="../pdf/09_%EC%A0%84%EA%B8%B0_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=24dcfc26" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 전기" data-size="1068302">전기<small>18쪽</small></a><a href="../pdf/10_%EC%9E%90%EB%8F%99%EC%A0%9C%EC%96%B4_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=e1c97d62" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 자동제어" data-size="1009838">자동제어<small>15쪽</small></a><a href="../pdf/11_%EC%9C%A0%EC%95%95%EA%B8%B0%EA%B8%B0_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=3e0f28f3" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 유압기기" data-size="1016030">유압기기<small>17쪽</small></a><a href="../pdf/12_%EA%B3%B5%EC%97%85%EA%B5%90%EC%9C%A1%ED%95%99_%EA%B3%B5%EC%8B%9D%EC%A0%95%EB%A6%AC%EC%99%80%ED%99%9C%EC%9A%A9.pdf?v=ec50e2db" target="_blank" rel="noopener" data-pdf="1" data-title="공식 정리 · 공업교육학" data-size="896299">공업교육학<small>12쪽</small></a></div><div class="pdfsave"><button type="button" class="pdfall" id="pdfall">인터넷 없이 보기 — 전부 저장 (41.8MB)</button><div class="pdfallmsg" id="pdfallmsg">Wi-Fi에서 한 번 받아 두면 인터넷 없이 열립니다 · 연 PDF는 자동으로 저장됩니다</div></div><div class="pdfnote">두 손가락으로 확대 · 두 번 탭하면 확대/원래대로 · 읽던 쪽을 기억합니다</div></div>
 <div class="panel">
     <div class="lbl">문제 세트</div>
     <div class="setseg" id="set" role="group" aria-label="문제 세트 선택"></div>
@@ -284,4 +334,383 @@ $('view').addEventListener('keydown',e=>{const rv=e.target.closest('.rv');if(rv&
 $('top').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 controls();draw();
 </script>
-<script>if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js").catch(function(){})}try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(function(){})}catch(e){}</script><script>(function(){var b=document.getElementById("pdfg"),s=document.getElementById("pdfsub");if(!b||!s)return;function set(o){s.hidden=!o;b.setAttribute("aria-expanded",String(o))}try{if(localStorage.getItem("pb-pdfg")==="1")set(true)}catch(e){}b.addEventListener("click",function(){var o=s.hidden;set(o);try{localStorage.setItem("pb-pdfg",o?"1":"0")}catch(e){}})})();</script></body></html>
+<script>if("serviceWorker"in navigator){navigator.serviceWorker.register("sw.js").catch(function(){})}try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(function(){})}catch(e){}</script><div class="pv" id="pv" hidden role="dialog" aria-modal="true" aria-labelledby="pvt"><div class="pvbar"><button type="button" class="pvb" id="pvx">닫기</button><div class="pvti"><div class="pvt" id="pvt"></div><div class="pvpg" id="pvpg" aria-live="polite"></div></div><button type="button" class="pvb z" id="pvminus" aria-label="축소">−</button><button type="button" class="pvb z" id="pvplus" aria-label="확대">+</button></div><div class="pvsc" id="pvsc"><div class="pvin" id="pvin"></div></div><div class="pvmsg" id="pvmsg" hidden></div></div><script>/* 문제집 홈 화면 앱 – PDF를 앱 안에서 열기(pdf.js) + 기기에 저장해 인터넷 없이 보기
+   - 저장: Cache Storage 'mjpdf-v1' (앱 판이 바뀌어도 유지. 주소의 ?v=해시가 바뀐 옛 판만 지움)
+   - 보기: 화면에 보이는 쪽 ±1만 그림, 멀어진 쪽은 캔버스를 비워 메모리 절약
+   - 확대: 두 손가락(핀치), 두 번 탭, −/+ 버튼. 읽던 쪽은 localStorage 'pb-pdfpos'에 기억 */
+(() => {
+  'use strict';
+  const box = document.querySelector('.pdfbox');
+  if (!box) return;
+  const CACHE = 'mjpdf-v1', LIB = './pdfjs/pdf.min.mjs', WORKER = 'pdfjs/pdf.worker.min.mjs';
+  const ZMIN = 1, ZMAX = 4;
+  // 쪽 하나의 캔버스 최대 화소: 확대했을 때는 보이는 쪽이 적으니 더 선명하게(아이폰 캔버스 한도 16.7M 이하)
+  const maxPx = () => (V.zoom > 1.5 ? 10e6 : 5e6);
+  const $ = (id) => document.getElementById(id);
+  const links = [...box.querySelectorAll('a[data-pdf]')];
+  const URLS = links.map((a) => a.href);
+  const hasCache = 'caches' in window;
+  const LS = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  };
+  const mb = (b) => (b / 1e6).toFixed(b >= 1e7 ? 0 : 1) + 'MB';
+  const nameOf = (u) => decodeURIComponent(new URL(u).pathname.split('/').pop());
+
+  // ---------------- 공식 정리: 과목별 목록 펼치기 ----------------
+  const gb = $('pdfg'), gs = $('pdfsub');
+  if (gb && gs) {
+    const setG = (o) => { gs.hidden = !o; gb.setAttribute('aria-expanded', String(o)); };
+    if (LS.get('pb-pdfg', '0') === '1') setG(true);
+    gb.addEventListener('click', () => { const o = gs.hidden; setG(o); LS.set('pb-pdfg', o ? '1' : '0'); });
+  }
+
+  // ---------------- 기기에 저장 ----------------
+  const openCache = () => caches.open(CACHE);
+  async function savedSet() {
+    if (!hasCache) return new Set();
+    try { const c = await openCache(); return new Set((await c.keys()).map((r) => r.url)); } catch (e) { return new Set(); }
+  }
+  async function prune() {
+    if (!hasCache) return;
+    try { const c = await openCache(); for (const r of await c.keys()) if (!URLS.includes(r.url)) await c.delete(r); } catch (e) {}
+  }
+  // 네트워크에서 받아 저장 → { blob, stored }
+  async function download(url, onprog) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const total = +res.headers.get('content-length') || 0;
+    const chunks = [];
+    let got = 0;
+    if (res.body && res.body.getReader) {
+      const rd = res.body.getReader();
+      for (;;) {
+        const { done, value } = await rd.read();
+        if (done) break;
+        chunks.push(value); got += value.byteLength;
+        if (onprog) onprog(got, total);
+      }
+    } else {
+      const b = new Uint8Array(await res.arrayBuffer()); chunks.push(b); got = b.byteLength;
+    }
+    const blob = new Blob(chunks, { type: 'application/pdf' });
+    let stored = false;
+    if (hasCache) {
+      try { const c = await openCache(); await c.put(url, new Response(blob, { headers: { 'content-type': 'application/pdf' } })); stored = true; } catch (e) {}
+    }
+    return { blob, stored };
+  }
+  async function getBytes(url, onprog) {
+    if (hasCache) {
+      try { const c = await openCache(); const hit = await c.match(url); if (hit) return new Uint8Array(await hit.arrayBuffer()); } catch (e) {}
+    }
+    const { blob } = await download(url, onprog);
+    return new Uint8Array(await blob.arrayBuffer());
+  }
+
+  const allBtn = $('pdfall'), allMsg = $('pdfallmsg');
+  let saving = false;
+  async function refresh() {
+    const s = await savedSet();
+    let left = 0, n = 0;
+    for (const a of links) {
+      const ok = s.has(a.href);
+      a.classList.toggle('saved', ok);
+      if (ok) n++; else left += +a.dataset.size || 0;
+    }
+    if (!allBtn || saving) return;
+    if (!hasCache) { allBtn.hidden = true; allMsg.textContent = '이 브라우저에서는 기기에 저장할 수 없습니다.'; return; }
+    if (n === links.length) {
+      allBtn.hidden = true;
+      allMsg.innerHTML = '<b>✓ ' + n + '개 모두 이 기기에 저장됨</b> — 인터넷 없이 열립니다';
+    } else {
+      allBtn.hidden = false; allBtn.disabled = false;
+      allBtn.textContent = (n ? '나머지 ' + (links.length - n) + '개도 저장' : '인터넷 없이 보기 — 전부 저장') + ' (' + mb(left) + ')';
+      allMsg.textContent = n ? n + '개 저장됨 · 연 PDF는 자동으로 저장됩니다' : 'Wi-Fi에서 한 번 받아 두면 인터넷 없이 열립니다 · 연 PDF는 자동으로 저장됩니다';
+    }
+  }
+  async function saveAll() {
+    if (saving) return;
+    saving = true; allBtn.disabled = true;
+    const s = await savedSet();
+    const todo = links.filter((a) => !s.has(a.href));
+    const tb = todo.reduce((t, a) => t + (+a.dataset.size || 0), 0);
+    let base = 0, i = 0, err = '';
+    for (const a of todo) {
+      i++;
+      try {
+        const r = await download(a.href, (g) => { allBtn.textContent = '저장 중 ' + i + '/' + todo.length + ' · ' + mb(base + g) + ' / ' + mb(tb); });
+        if (!r.stored) { err = '기기 저장 공간이 부족해 저장하지 못했습니다.'; break; }
+      } catch (e) { err = '저장하지 못했습니다 — 인터넷 연결을 확인하고 다시 눌러 주세요.'; break; }
+      base += +a.dataset.size || 0;
+      a.classList.add('saved');
+    }
+    saving = false;
+    await refresh();
+    if (err) allMsg.textContent = err;
+  }
+  if (allBtn) allBtn.addEventListener('click', saveAll);
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) {}
+  prune().then(refresh);
+
+  // ---------------- 앱 안 PDF 보기 ----------------
+  const pv = $('pv'), sc = $('pvsc'), inn = $('pvin'), msgEl = $('pvmsg');
+  const V = { doc: null, gen: 0, n: 0, zoom: 1, W: 0, pages: [], tops: [], key: '', hist: false, pinch: null, busy: false, saveT: 0, tz: 0 };
+  let lib = null;
+  async function loadLib() {
+    if (lib) return lib;
+    const L = await import(LIB);
+    L.GlobalWorkerOptions.workerSrc = new URL(WORKER, location.href).href;
+    lib = L;
+    return L;
+  }
+  function msg(html) { if (html == null) { msgEl.hidden = true; msgEl.innerHTML = ''; } else { msgEl.innerHTML = html; msgEl.hidden = false; } }
+  function lock(on) { document.documentElement.style.overflow = on ? 'hidden' : ''; document.body.style.overflow = on ? 'hidden' : ''; }
+  const spin = '<div class="pvspin"></div>';
+  const pad = () => Math.round(8 * V.zoom);
+
+  function layout() {
+    const W = Math.max(200, Math.min(sc.clientWidth - 16, 980));
+    V.W = W;
+    const w = Math.round(W * V.zoom), g = pad();
+    inn.style.width = (w + 2 * g) + 'px';
+    inn.style.padding = g + 'px ' + g + 'px ' + (g + 28) + 'px';
+    let y = g;
+    V.tops = new Array(V.n);
+    for (const p of V.pages) {
+      const h = Math.round(w * p.ratio);
+      p.div.style.width = w + 'px'; p.div.style.height = h + 'px'; p.div.style.marginBottom = g + 'px';
+      V.tops[p.i] = y; y += h + g;
+    }
+  }
+  function pageAt(y) {
+    let lo = 0, hi = V.n - 1;
+    while (lo < hi) { const m = (lo + hi + 1) >> 1; if (V.tops[m] <= y) lo = m; else hi = m - 1; }
+    return lo;
+  }
+  const curPage = () => pageAt(sc.scrollTop + sc.clientHeight * 0.4);
+  function range() {
+    const top = sc.scrollTop, bot = top + sc.clientHeight;
+    const a = pageAt(top);
+    let b = a;
+    while (b + 1 < V.n && V.tops[b + 1] < bot) b++;
+    return [a, b];
+  }
+  function keepLayout() {   // 화면 크기·쪽 크기가 바뀌어도 보던 곳 유지
+    if (!V.n) return;
+    const c = curPage(), h0 = (V.tops[c + 1] || V.tops[c] + 1) - V.tops[c];
+    const off = (sc.scrollTop - V.tops[c]) / h0;
+    const fx = (sc.scrollLeft + sc.clientWidth / 2) / (inn.offsetWidth || 1);
+    layout();
+    const h1 = (V.tops[c + 1] || V.tops[c] + 1) - V.tops[c];
+    sc.scrollTop = V.tops[c] + off * h1;
+    sc.scrollLeft = fx * inn.offsetWidth - sc.clientWidth / 2;
+  }
+  let raf = 0;
+  function update() { if (!raf) raf = requestAnimationFrame(() => { raf = 0; tick(); }); }
+  function tick() {
+    if (!V.doc || V.pinch) return;
+    const c = curPage();
+    $('pvpg').textContent = (c + 1) + ' / ' + V.n + '쪽' + (V.zoom > 1.01 ? ' · ' + Math.round(V.zoom * 100) + '%' : '');
+    clearTimeout(V.saveT);
+    const key = V.key;
+    V.saveT = setTimeout(() => { const m = LS.get('pb-pdfpos', {}); m[key] = c; LS.set('pb-pdfpos', m); }, 400);
+    const [a, b] = range();
+    const keep = V.zoom > 1.5 ? 1 : 2;   // 확대 중에는 이웃 쪽 캔버스를 더 빨리 비움(메모리)
+    for (const p of V.pages) if ((p.cv || p.task) && (p.i < a - keep || p.i > b + keep)) drop(p);
+    pump();
+  }
+  function drop(p) {
+    if (p.task) { try { p.task.cancel(); } catch (e) {} p.task = null; }
+    if (p.cv) { p.cv.width = 0; p.cv.height = 0; p.cv.remove(); p.cv = null; p.z = 0; }
+  }
+  async function pump() {
+    if (V.busy) return;
+    V.busy = true;
+    try {
+      for (;;) {
+        if (!V.doc || V.pinch) break;
+        const [a, b] = range(), lo = Math.max(0, a - 1), hi = Math.min(V.n - 1, b + 1), mid = (a + b) / 2;
+        let best = null;
+        for (let i = lo; i <= hi; i++) {
+          const p = V.pages[i];
+          if (p.err || (p.cv && p.z === V.zoom && p.w === V.W)) continue;
+          if (!best || Math.abs(i - mid) < Math.abs(best.i - mid)) best = p;
+        }
+        if (!best) break;
+        await render(best);
+      }
+    } finally { V.busy = false; }
+  }
+  async function render(p) {
+    const gen = V.gen, z = V.zoom, W = V.W;
+    let page;
+    try { page = await V.doc.getPage(p.i + 1); } catch (e) { p.err = 1; return; }
+    if (gen !== V.gen) return;
+    const vp1 = page.getViewport({ scale: 1 }), r = vp1.height / vp1.width;
+    if (Math.abs(r - p.ratio) > 0.002) { p.ratio = r; keepLayout(); }
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    let s = (W * z / vp1.width) * dpr;
+    const px = vp1.width * vp1.height * s * s;
+    const lim = maxPx();
+    if (px > lim) s *= Math.sqrt(lim / px);
+    const vp = page.getViewport({ scale: s });
+    const cv = document.createElement('canvas');
+    cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
+    const task = page.render({ canvas: cv, viewport: vp, background: '#ffffff' });
+    p.task = task;
+    try { await task.promise; } catch (e) {
+      cv.width = 0; cv.height = 0;
+      if (p.task === task) p.task = null;
+      if (!(e && e.name === 'RenderingCancelledException')) p.err = 1;
+      return;
+    }
+    if (p.task === task) p.task = null;
+    if (gen !== V.gen) { cv.width = 0; cv.height = 0; return; }
+    if (p.cv) { p.cv.width = 0; p.cv.height = 0; p.cv.remove(); }
+    p.div.appendChild(cv); p.cv = cv; p.z = z; p.w = W;
+  }
+  function setZoom(z, cx, cy) {
+    if (!V.doc) return;
+    z = Math.max(ZMIN, Math.min(ZMAX, z));
+    if (cx == null) { cx = sc.clientWidth / 2; cy = sc.clientHeight / 2; }
+    const k = z / V.zoom;
+    if (Math.abs(k - 1) < 1e-3) return;
+    const fx = sc.scrollLeft + cx - inn.offsetLeft, fy = sc.scrollTop + cy - inn.offsetTop;
+    V.zoom = z;
+    layout();
+    sc.scrollLeft = fx * k + inn.offsetLeft - cx;
+    sc.scrollTop = fy * k + inn.offsetTop - cy;
+    update();
+  }
+
+  async function openPdf(a) {
+    const gen = ++V.gen;
+    $('pvt').textContent = a.dataset.title || nameOf(a.href);
+    $('pvpg').textContent = '';
+    inn.innerHTML = ''; inn.style.width = ''; inn.style.transform = '';
+    V.pages = []; V.tops = []; V.n = 0; V.zoom = 1; V.key = nameOf(a.href);
+    pv.hidden = false; lock(true);
+    if (!V.hist) { try { history.pushState({ pv: 1 }, ''); V.hist = true; } catch (e) {} }
+    msg(spin + '불러오는 중…');
+    let stage = 'lib';
+    try {
+      const L = await loadLib();
+      stage = 'get';
+      const data = await getBytes(a.href, (g, t) => {
+        if (gen === V.gen) msg(spin + '처음 한 번 내려받는 중… ' + (t ? Math.min(99, Math.round(g / t * 100)) + '%' : mb(g)) + '<br><small>받은 뒤에는 인터넷 없이 열립니다</small>');
+      });
+      if (gen !== V.gen) return;
+      refresh();
+      stage = 'parse';
+      const doc = await L.getDocument({ data, useWasm: false, isEvalSupported: false, enableXfa: false }).promise;
+      if (gen !== V.gen) { doc.destroy(); return; }
+      const p1 = await doc.getPage(1);
+      if (gen !== V.gen) { doc.destroy(); return; }
+      const vp = p1.getViewport({ scale: 1 }), ratio = vp.height / vp.width;
+      V.doc = doc; V.n = doc.numPages;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < V.n; i++) {
+        const d = document.createElement('div');
+        d.className = 'pvp';
+        frag.appendChild(d);
+        V.pages.push({ i, div: d, ratio, cv: null, z: 0, w: 0, task: null, err: 0 });
+      }
+      inn.appendChild(frag);
+      layout();
+      const pos = LS.get('pb-pdfpos', {})[V.key] | 0;
+      sc.scrollLeft = 0;
+      sc.scrollTop = pos > 0 && pos < V.n ? V.tops[pos] - pad() : 0;
+      msg(null);
+      update();
+    } catch (e) {
+      if (gen !== V.gen) return;
+      const tail = '<br><br><a href="' + a.href + '" target="_blank" rel="noopener">Safari로 열기 (인터넷 필요)</a>';
+      if (stage === 'get') msg('아직 이 기기에 저장되지 않은 PDF입니다.<br>인터넷에 연결된 상태에서 한 번 열거나<br>‘전부 저장’을 눌러 두세요.' + tail);
+      else msg('이 기기에서 PDF를 열지 못했습니다.' + tail);
+    }
+  }
+  function closePdf(fromPop) {
+    V.gen++;
+    for (const p of V.pages) drop(p);
+    V.pages = []; V.tops = []; V.n = 0;
+    if (V.doc) { try { V.doc.destroy(); } catch (e) {} V.doc = null; }
+    V.pinch = null; inn.innerHTML = ''; inn.style.transform = ''; msg(null);
+    pv.hidden = true; lock(false);
+    if (V.hist) { V.hist = false; if (!fromPop) { try { history.back(); } catch (e) {} } }
+  }
+
+  links.forEach((a) => a.addEventListener('click', (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;   // 컴퓨터: 새 탭으로 열기
+    e.preventDefault();
+    openPdf(a);
+  }));
+  $('pvx').addEventListener('click', () => closePdf(false));
+  $('pvplus').addEventListener('click', () => setZoom(V.zoom * 1.25));
+  $('pvminus').addEventListener('click', () => setZoom(V.zoom / 1.25));
+  window.addEventListener('popstate', () => { if (!pv.hidden) { V.hist = false; closePdf(true); } });
+  document.addEventListener('keydown', (e) => { if (!pv.hidden && e.key === 'Escape') closePdf(false); });
+  sc.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', () => { if (V.doc) { keepLayout(); update(); } });
+  sc.addEventListener('wheel', (e) => {
+    if (!e.ctrlKey || !V.doc) return;
+    e.preventDefault();
+    const r = sc.getBoundingClientRect();
+    setZoom(V.zoom * Math.exp(-e.deltaY / 300), e.clientX - r.left, e.clientY - r.top);
+  }, { passive: false });
+  // iOS Safari: 화면 전체 확대 대신 PDF만 확대
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach((t) => pv.addEventListener(t, (e) => e.preventDefault(), { passive: false }));
+
+  // 두 손가락 확대
+  const dist = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  let tap = null, lastTap = 0, lastX = 0, lastY = 0;
+  sc.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2 && V.doc) {
+      e.preventDefault();
+      tap = null;
+      const [t1, t2] = e.touches, r = sc.getBoundingClientRect();
+      const cx = (t1.clientX + t2.clientX) / 2 - r.left, cy = (t1.clientY + t2.clientY) / 2 - r.top;
+      V.pinch = { d0: dist(t1, t2) || 1, cx, cy, z0: V.zoom, s: 1 };
+      inn.style.transformOrigin = (sc.scrollLeft + cx - inn.offsetLeft) + 'px ' + (sc.scrollTop + cy - inn.offsetTop) + 'px';
+    } else if (e.touches.length === 1) {
+      tap = { x: e.touches[0].clientX, y: e.touches[0].clientY, moved: false };
+    }
+  }, { passive: false });
+  sc.addEventListener('touchmove', (e) => {
+    const P = V.pinch;
+    if (P && e.touches.length >= 2) {
+      e.preventDefault();
+      P.s = Math.max(ZMIN / P.z0, Math.min(ZMAX / P.z0, dist(e.touches[0], e.touches[1]) / P.d0));
+      inn.style.transform = 'scale(' + P.s + ')';
+    } else if (tap && e.touches.length === 1 && Math.hypot(e.touches[0].clientX - tap.x, e.touches[0].clientY - tap.y) > 10) {
+      tap.moved = true;
+    }
+  }, { passive: false });
+  const touchEnd = (e) => {
+    const P = V.pinch;
+    if (P) {
+      if (e.touches.length >= 2) return;
+      V.pinch = null;
+      inn.style.transform = '';
+      setZoom(P.z0 * P.s, P.cx, P.cy);
+      update();
+      return;
+    }
+    if (!tap || tap.moved || e.touches.length || e.changedTouches.length !== 1) { tap = null; return; }
+    const t = e.changedTouches[0], now = Date.now(), r = sc.getBoundingClientRect();
+    if (now - lastTap < 320 && Math.hypot(t.clientX - lastX, t.clientY - lastY) < 30) {   // 두 번 탭: 확대 ↔ 원래대로
+      e.preventDefault();
+      lastTap = 0; V.tz = now;
+      setZoom(V.zoom < 1.6 ? 2.4 : 1, t.clientX - r.left, t.clientY - r.top);
+    } else { lastTap = now; lastX = t.clientX; lastY = t.clientY; }
+    tap = null;
+  };
+  sc.addEventListener('touchend', touchEnd);
+  sc.addEventListener('touchcancel', (e) => { if (V.pinch) touchEnd(e); tap = null; });
+  sc.addEventListener('dblclick', (e) => {
+    if (Date.now() - V.tz < 800) return;
+    const r = sc.getBoundingClientRect();
+    setZoom(V.zoom < 1.6 ? 2.4 : 1, e.clientX - r.left, e.clientY - r.top);
+  });
+})();
+</script></body></html>
